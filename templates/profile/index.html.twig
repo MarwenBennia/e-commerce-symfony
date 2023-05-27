@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Card</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+
+<body>
+<div class="d-flex flex-row">
+  <div class="container my-auto w-120">
+    <div class="card text-center">
+      <div class="card-body center">
+        <h3 class="card-title">{{ user.firstname }} {{ user.lastname }}</h3>
+        {% for role in user.roles %}
+            {% if role == "ROLE_ADMIN" %}
+                {% set name = "Administrateur" %}
+                {% set color = "danger" %}
+            {% elseif role == "ROLE_PRODUCT_ADMIN" %}
+                {% set name = "Admin produits" %}
+                {% set color = "warning" %}
+            {% else %}
+                {% set name = "Membre" %}
+                {% set color = "success" %}
+            {% endif %}
+            <span class="badge bg-{{ color }}">{{ name }}</span>
+        {% endfor %}
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Joined: {{ user.createdAt|date("F jS \\a\\t g:ia") }}</li>
+          <li class="list-group-item">Location: {{ user.address }}, {{ user.city }}</li>
+          <li class="list-group-item">Zip: {{ user.zipcode }}</li>
+          <li class="list-group-item">Email: {{ user.email }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  
+    
+    <div class="container my-auto">
+      <div class="card text-center">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% if orders is defined and orders is not empty %}
+            {% for order in orders %}
+              <tr>
+                  <td>{{ order.order.reference }}</td>
+                  <td>{{ order.product.name }}</td>
+                  <td>{{ order.orderDetails.quantity }}</td>
+                  <td>{{ order.orderDetails.price }}</td>
+                  <td>{{ order.order.createdAt|date("F jS \\a\\t g:ia") }}</td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="5">No orders available.</td>
+            </tr>
+          {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+{% endblock %}

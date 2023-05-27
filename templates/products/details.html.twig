@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Détails de
+    {{ product.name }}
+{% endblock %}
+
+{% block body %}
+    <main class="container ">
+        <section class="row mx-auto">
+            <div class="col-12 row-center">
+                <h1 class="mx-auto">{{ product.name }}</h1>
+            </div>
+            <div class="col-6">
+                <img src="{{ asset('assets/uploads/products/mini/300x300-ff20fc6262807e7e2748101e9091cd4c.webp' ) }}" class="card-img-top w-50 h-80" alt="{{ product.name }}">
+            </div>
+            <div class="col-6">
+                <p>{{ product.description }}</p>
+                <p>Catégorie : {{ product.categories.name }}</p>
+                <p>Prix : {{ product.price / 100 }} €</p>
+                {% if product.stock > 0 %}
+                    <a href="#" class="btn btn-success">Ajouter au panier</a>
+                {% else %}
+                    <p class="text-danger">Temporairement en rupture de stock</p>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

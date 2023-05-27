@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Liste des produits{% endblock %}
+
+{% block body %}
+    <h1>Liste des produits</h1>
+    {% if products|length == 0 %}
+    <p>No products found.</p>
+{% else %}
+    {% for product in products %}
+                <div class="col-3 mb-3">
+                    <article class="card h-100">
+                        <img src="{{ asset('assets/uploads/products/mini/300x300-ff20fc6262807e7e2748101e9091cd4c.webp' ) }}" class="card-img-top" alt="{{ product.name }}">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ product.name }}</h2>
+                            <p class="card-text">{{ product.description }}</p>
+                            <p class="card-text">{{ product.price }}</p>
+                            <a href="{{ path('products_details', {"slug": product.slug }) }}" class="btn btn-primary">Voir les détails</a>
+                        </div>
+                    </article>
+                </div>
+              
+            {% endfor %}
+              {%endif%}
+{% endblock %}
